@@ -5,5 +5,6 @@ project (learn-cg)
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-add_subdirectory(HW0)
+add_subdirectory(homework0)
+add_subdirectory(homework1)
 
