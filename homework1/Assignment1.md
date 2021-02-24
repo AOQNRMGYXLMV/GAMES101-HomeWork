@@ -19,15 +19,18 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio, float z
 
 ## 透视矩阵
 
-$$
-M_{perspective}=
-    \begin{pmatrix}
-    n & 0 & 0 & 0 \\
-    0 & n & 0 & 0 \\
-    0 & 0 & n+f & -nf \\
-    0 & 0 & 1 & 0
-    \end{pmatrix}
-$$
+[comment]:
+    $$
+    M_{perspective}=
+        \begin{pmatrix}
+        n & 0 & 0 & 0 \\
+        0 & n & 0 & 0 \\
+        0 & 0 & n+f & -nf \\
+        0 & 0 & 1 & 0
+        \end{pmatrix}
+    $$
+
+![](https://latex.codecogs.com/svg.latex?M_{perspective}=%20%20%20%20\begin{pmatrix}%20%20%20%20n%20&%200%20&%200%20&%200%20\\%20%20%20%200%20&%20n%20&%200%20&%200%20\\%20%20%20%200%20&%200%20&%20n+f%20&%20-nf%20\\%20%20%20%200%20&%200%20&%201%20&%200%20%20%20%20\end{pmatrix})
 
 ## 课后思考
 
@@ -36,6 +39,7 @@ $$
 设两平面中间一点为$(x, y, z, 1), (f < z < n)$
 对这一点应用透视变换后
 
+[comment]:
 $$
     \begin{pmatrix}
     n & 0 & 0 & 0 \\
@@ -65,9 +69,13 @@ $$
     \end{pmatrix}
 $$
 
+![](https://latex.codecogs.com/svg.latex?\begin{pmatrix}%20%20%20%20n%20&%200%20&%200%20&%200%20\\%20%20%20%200%20&%20n%20&%200%20&%200%20\\%20%20%20%200%20&%200%20&%20n+f%20&%20-nf%20\\%20%20%20%200%20&%200%20&%201%20&%200%20%20%20%20\end{pmatrix}%20%20%20%20\begin{pmatrix}%20%20%20%20x%20%20\\%20%20%20%20y%20%20\\%20%20%20%20z%20%20\\%20%20%20%201%20%20%20%20%20\end{pmatrix}%20%20%20%20=%20%20%20%20\begin{pmatrix}%20%20%20%20nx%20%20\\%20%20%20%20ny%20%20\\%20%20%20%20(n+f)z-nf%20%20\\%20%20%20%20z%20%20%20%20%20\end{pmatrix}%20%20%20%20=%20%20%20%20\begin{pmatrix}%20%20%20%20\cfrac{nx}{z}%20%20\\%20%20%20%20\cfrac{ny}{z}%20%20\\%20%20%20%20(n+f)-\cfrac{nf}{z}%20\\%20%20%20%201%20%20%20%20%20\end{pmatrix})
+
 将z坐标相减得到：
 
+[comment]:
 $$
 (n+f)-\cfrac{nf}{z} - z = \cfrac{(n+f)z-nf-z^2}{z}
 $$
 
+![](https://latex.codecogs.com/svg.latex?(n+f)-\cfrac{nf}{z}%20-%20z%20=%20\cfrac{(n+f)z-nf-z^2}{z})
