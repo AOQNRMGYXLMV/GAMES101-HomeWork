@@ -1,3 +1,4 @@
+
 # Assignment 1
 
 [Lecture 04](https://sites.cs.ucsb.edu/~lingqi/teaching/resources/GAMES101_Lecture_04.pdf)
@@ -34,6 +35,7 @@ $$
 
 设两平面中间一点为$(x, y, z, 1), (f < z < n)$
 对这一点应用透视变换后
+
 $$
     \begin{pmatrix}
     n & 0 & 0 & 0 \\
@@ -41,25 +43,20 @@ $$
     0 & 0 & n+f & -nf \\
     0 & 0 & 1 & 0
     \end{pmatrix}
-
     \begin{pmatrix}
     x  \\
     y  \\
     z  \\
     1 
     \end{pmatrix}
-
     =
-
     \begin{pmatrix}
     nx  \\
     ny  \\
     (n+f)z-nf  \\
     z 
     \end{pmatrix}
-
     =
-
     \begin{pmatrix}
     \cfrac{nx}{z}  \\
     \cfrac{ny}{z}  \\
@@ -69,8 +66,8 @@ $$
 $$
 
 将z坐标相减得到：
-$$
 
+$$
 (n+f)-\cfrac{nf}{z} - z = \cfrac{(n+f)z-nf-z^2}{z}
-
 $$
+
