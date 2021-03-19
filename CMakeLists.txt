@@ -7,6 +7,8 @@ find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_subdirectory(homework0)
 add_subdirectory(homework1)
 add_subdirectory(homework2)
