@@ -15,6 +15,9 @@ public:
     Texture(const std::string& name)
     {
         image_data = cv::imread(name);
+		if (image_data.empty()) {
+			printf("[ERROR] read Texture failed, file: %s not exists.\n", name.c_str());
+		}
         cv::cvtColor(image_data, image_data, cv::COLOR_RGB2BGR);
         width = image_data.cols;
         height = image_data.rows;
