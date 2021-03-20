@@ -280,7 +280,35 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
     // Use: Instead of passing the triangle's color directly to the frame buffer, pass the color to the shaders first to get the final color;
     // Use: auto pixel_color = fragment_shader(payload);
 
- 
+	auto v = t.toVector4();
+	int left = std::floor(std::min(t.v[0].x(), std::min(t.v[1].x(), t.v[2].x())));
+	int right = std::ceil(std::max(t.v[0].x(), std::max(t.v[1].x(), t.v[2].x())));
+	int bottom = std::floor(std::min(t.v[0].y(), std::min(t.v[1].y(), t.v[2].y())));
+	int top = std::ceil(std::max(t.v[0].y(), std::max(t.v[1].y(), t.v[2].y())));
+
+	for (int x = left; x <= right; x += 1) {
+		for (float y = bottom; y <= top; y += 1) {
+			if (insideTriangle(x, y, t.v)) {
+				auto[alpha, beta, gamma] = computeBarycentric2D(x, y, t.v);
+				float Z = 1.0/(alpha / v[0].w() + beta / v[1].w() + gamma / v[2].w());
+				float zp = alpha * v[0].z() / v[0].w() + beta * v[1].z() / v[1].w() + gamma * v[2].z() / v[2].w();
+				zp *= Z;
+				auto& cur_depth = depth_buf[x + width * y];
+
+				if (-zp < cur_depth) {
+					cur_depth = -zp;
+					auto interpolated_color = (t.color[0]*alpha/v[0].w() + t.color[1]*beta/v[1].w() + t.color[2]*gamma/v[2].w()) * Z;
+					auto interpolated_normal = (t.normal[0]*alpha/v[0].w() + t.normal[1]*beta/v[1].w() + t.normal[2]*gamma/v[2].w()) * Z;
+					auto interpolated_texcoords = (t.tex_coords[0]*alpha/v[0].w() + t.tex_coords[1]*beta/v[1].w() + t.tex_coords[2]*gamma/v[2].w()) * Z;
+					auto interpolated_shadingcoords = (view_pos[0]*alpha/v[0].w() + view_pos[1]*beta/v[1].w() + view_pos[2]*gamma/v[2].w()) * Z;
+					fragment_shader_payload payload(interpolated_color, interpolated_normal.normalized(), interpolated_texcoords, texture ? &*texture : nullptr);
+					payload.view_pos = interpolated_shadingcoords;
+					auto pixel_color = fragment_shader(payload);
+					set_pixel(Eigen::Vector2i(x, y), pixel_color);
+				}
+			}
+		}
+	}
 }
 
 void rst::rasterizer::set_model(const Eigen::Matrix4f& m)
