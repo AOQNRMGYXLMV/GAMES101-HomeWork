@@ -12,4 +12,5 @@ set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(homework0)
 add_subdirectory(homework1)
 add_subdirectory(homework2)
+add_subdirectory(homework3)
 
