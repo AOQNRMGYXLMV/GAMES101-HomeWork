@@ -4,6 +4,8 @@
 
 [homework](http://games-cn.org/forums/topic/allhw)
 
+[lectures](http://games-cn.org/graphics-intro-ppt-video)
+
 ## build
 
 ```bash
