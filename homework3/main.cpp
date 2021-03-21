@@ -251,6 +251,9 @@ Eigen::Vector3f displacement_fragment_shader(const fragment_shader_payload& payl
 	ln << -dU, -dV, 1.f;
 	n = (TBN * ln).normalized();
 
+	// displacement view point
+	point += kn * n * tex->getColor(u, v).norm();
+
     Eigen::Vector3f result_color = {0, 0, 0};
 
     for (auto& light : lights)
