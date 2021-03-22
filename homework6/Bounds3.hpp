@@ -98,9 +98,13 @@ inline bool Bounds3::IntersectP(const Ray& ray, const Vector3f& invDir,
     // TODO test if ray bound intersects
 	Vector3f tmin = (pMin - ray.origin) * invDir;
 	Vector3f tmax = (pMax - ray.origin) * invDir;
-	float tenter = std::max(tmin.x, std::max(tmin.y, tmin.z));
-	float texit  = std::min(tmax.x, std::min(tmax.y, tmax.z));
-	bool intersected = (tenter < texit) && (texit >= 0);
+	if (tmin.x > tmax.x) std::swap(tmin.x, tmax.x);
+	if (tmin.y > tmax.y) std::swap(tmin.y, tmax.y);
+	if (tmin.z > tmax.z) std::swap(tmin.z, tmax.z);
+
+	float tenter = std::max({tmin.x, tmin.y, tmin.z});
+	float texit  = std::min({tmax.x, tmax.y, tmax.z});
+	bool intersected = (tenter < texit) && (texit > 0);
 	return intersected;
 }
 

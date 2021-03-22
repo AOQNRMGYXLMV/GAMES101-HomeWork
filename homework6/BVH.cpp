@@ -105,10 +105,18 @@ Intersection BVHAccel::Intersect(const Ray& ray) const
 Intersection BVHAccel::getIntersection(BVHBuildNode* node, const Ray& ray) const
 {
     // TODO Traverse the BVH to find intersection
+	Intersection noisect, lisect, risect;
+	Vector3f invDir(1.f/ray.direction.x, 1.f/ray.direction.y, 1.f/ray.direction.z);
+	std::array<int, 3> dirIsNeg{(int)ray.direction.x>0, (int)ray.direction.y>0, (int)ray.direction.z>0};
+	// not intersect with bounding box
+	if (!node->bounds.IntersectP(ray, invDir, dirIsNeg)) {
+		return noisect;
+	}
+
 	if (node->object) { // leaf node
 		return node->object[0].getIntersection(ray);
 	}
-	Intersection noisect, lisect, risect;
+
 	if (node->left) {
 		lisect = getIntersection(node->left, ray);
 	}
