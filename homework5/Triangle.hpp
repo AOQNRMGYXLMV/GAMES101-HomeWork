@@ -5,12 +5,12 @@
 #include <cstring>
 
 bool rayTriangleIntersect(const Vector3f& v0, const Vector3f& v1, const Vector3f& v2, const Vector3f& orig,
-                          const Vector3f& dir, float& tnear, float& u, float& v)
+		const Vector3f& dir, float& tnear, float& u, float& v)
 {
-    // TODO: Implement this function that tests whether the triangle
-    // that's specified bt v0, v1 and v2 intersects with the ray (whose
-    // origin is *orig* and direction is *dir*)
-    // Also don't forget to update tnear, u and v.
+	// TODO: Implement this function that tests whether the triangle
+	// that's specified bt v0, v1 and v2 intersects with the ray (whose
+	// origin is *orig* and direction is *dir*)
+	// Also don't forget to update tnear, u and v.
 
 	// Moller Trumbore algorithm
 	Vector3f E1 = v1 - v0;
@@ -30,7 +30,7 @@ bool rayTriangleIntersect(const Vector3f& v0, const Vector3f& v1, const Vector3f
 	v = b2;
 
 	bool intersected = (t>0) && (b1>0) && (b2>0) && (b3>0);
-    return intersected;
+	return intersected;
 }
 
 class MeshTriangle : public Object
