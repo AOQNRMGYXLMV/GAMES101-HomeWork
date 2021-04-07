@@ -109,6 +109,33 @@ Intersection BVHAccel::getIntersection(BVHBuildNode* node, const Ray& ray) const
 {
     // TODO Traverse the BVH to find intersection
 
+	Intersection noisect, lisect, risect;
+	Vector3f invDir(1.f/ray.direction.x, 1.f/ray.direction.y, 1.f/ray.direction.z);
+	std::array<int, 3> dirIsNeg{(int)ray.direction.x>0, (int)ray.direction.y>0, (int)ray.direction.z>0};
+	// not intersect with bounding box
+	if (!node->bounds.IntersectP(ray, invDir, dirIsNeg)) {
+		return noisect;
+	}
+
+	if (node->object) { // leaf node
+		return node->object[0].getIntersection(ray);
+	}
+
+	if (node->left) {
+		lisect = getIntersection(node->left, ray);
+	}
+	if (node->right) {
+		risect = getIntersection(node->right, ray);
+	}
+	if (!lisect.happened && !risect.happened) {
+		return noisect;
+	}
+	if (lisect.happened && risect.happened) {
+		if (lisect.distance < risect.distance)
+			return lisect;
+		return risect;
+	}
+	return lisect.happened ? lisect : risect;
 }
 
 
