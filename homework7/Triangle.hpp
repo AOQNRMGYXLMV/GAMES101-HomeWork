@@ -72,16 +72,16 @@ public:
     }
     Vector3f evalDiffuseColor(const Vector2f&) const override;
     Bounds3 getBounds() override;
-    void Sample(Intersection &pos, float &pdf){
+    void Sample(Intersection &pos, float &pdf) override {
         float x = std::sqrt(get_random_float()), y = get_random_float();
         pos.coords = v0 * (1.0f - x) + v1 * (x * (1.0f - y)) + v2 * (x * y);
         pos.normal = this->normal;
         pdf = 1.0f / area;
     }
-    float getArea(){
+    float getArea() override {
         return area;
     }
-    bool hasEmit(){
+    bool hasEmit() override {
         return m->hasEmission();
     }
 };
@@ -253,6 +253,13 @@ inline Intersection Triangle::getIntersection(Ray ray)
     t_tmp = dotProduct(e2, qvec) * det_inv;
 
     // TODO find ray triangle intersection
+	inter.happened = (t_tmp>0) && (u>0) && (v>0) && (1.f-u-v>0);
+	inter.coords   = ray(t_tmp);
+	inter.normal   = normal;
+	inter.distance = t_tmp;
+	inter.obj      = this;
+	inter.m        = m;
+    inter.emit     = m->m_emission;
 
     return inter;
 }
