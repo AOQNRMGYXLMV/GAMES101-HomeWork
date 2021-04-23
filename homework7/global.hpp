@@ -39,7 +39,7 @@ inline float get_random_float()
 
 inline void UpdateProgress(float progress)
 {
-    int barWidth = 70;
+    int barWidth = 100;
 
     std::cout << "[";
     int pos = barWidth * progress;

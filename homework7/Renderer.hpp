@@ -18,4 +18,5 @@ public:
     void Render(const Scene& scene);
 
 private:
+    // static std::vector<Vector3f> RenderRange(uint32_t st, uint32_t ed, const Scene& scene);
 };
